@@ -200,6 +200,15 @@ public class TelefoneDAO {
 		return telefones;
 	}
 
+	/**
+	 * 
+	 * Constrói um objeto do tipo Telefone a partir de um registro do resultSet
+	 * 
+	 * @param resultadoDaConsulta o item do resultSet (isto é, um registro da tabela
+	 *                            Telefone)
+	 * @return um objeto do tipo Telefone
+	 * 
+	 */
 	private Telefone construirTelefoneDoResultSet(ResultSet resultadoDaConsulta) {
 		Telefone telefone;
 		telefone = new Telefone();
