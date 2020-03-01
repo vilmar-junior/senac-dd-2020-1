@@ -1,7 +1,7 @@
 # senac-dd-2020-1
 Repositório da disciplina de Desenvolvimento Desktop, semestre 2020/1
 
-#Estrutura do projeto
+# Estrutura do projeto
 
 O projeto está organizado conforme o modelo MVC, com os seguintes pacotes principais
 
