@@ -2,37 +2,26 @@ package model.vo.exercicio1;
 
 public class Telefone {
 	private int id;
-	private Cliente cliente;
+	private Cliente dono;
 	private String codigoPais;
 	private String ddd;
 	private String numero;
-	private String tipoLinha;
+	private boolean movel;
 	private boolean ativo;
+
+	public Telefone(int id, Cliente dono, String codigoPais, String ddd, String numero, boolean movel, boolean ativo) {
+		super();
+		this.id = id;
+		this.dono = dono;
+		this.codigoPais = codigoPais;
+		this.ddd = ddd;
+		this.numero = numero;
+		this.movel = movel;
+		this.ativo = ativo;
+	}
 
 	public Telefone() {
 
-	}
-
-	public Telefone(Cliente cliente, String codigoPais, String ddd, String numero, String tipoLinha, boolean ativo) {
-		super();
-		this.cliente = cliente;
-		this.codigoPais = codigoPais;
-		this.ddd = ddd;
-		this.numero = numero;
-		this.tipoLinha = tipoLinha;
-		this.ativo = ativo;
-	}
-
-	public Telefone(int id, Cliente cliente, String codigoPais, String ddd, String numero, String tipoLinha,
-			boolean ativo) {
-		super();
-		this.id = id;
-		this.cliente = cliente;
-		this.codigoPais = codigoPais;
-		this.ddd = ddd;
-		this.numero = numero;
-		this.tipoLinha = tipoLinha;
-		this.ativo = ativo;
 	}
 
 	public String getCodigoPais() {
@@ -59,26 +48,12 @@ public class Telefone {
 		this.numero = numero;
 	}
 
-	public String getTipoLinha() {
-		return tipoLinha;
-	}
-
-	public void setTipoLinha(String tipoLinha) {
-		this.tipoLinha = tipoLinha;
-	}
-
 	public boolean isAtivo() {
 		return ativo;
 	}
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
-	}
-
-	@Override
-	public String toString() {
-		return " id: " + id + " |idCliente: " + cliente.getId() + "| +" + codigoPais + "(" + ddd + ")" + numero
-				+ " - Linha: " + tipoLinha + " " + (ativo ? "Ativa" : "Inativa");
 	}
 
 	public int getId() {
@@ -89,15 +64,25 @@ public class Telefone {
 		this.id = id;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
+	public Cliente getDono() {
+		return dono;
 	}
 
-	public void setIdCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setDono(Cliente dono) {
+		this.dono = dono;
 	}
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public boolean isMovel() {
+		return movel;
+	}
+
+	public void setMovel(boolean movel) {
+		this.movel = movel;
+	}
+
+	@Override
+	public String toString() {
+		return "Telefone [id=" + id + ", dono=" + dono + ", codigoPais=" + codigoPais + ", ddd=" + ddd + ", numero="
+				+ numero + ", movel=" + movel + ", ativo=" + ativo + "]";
 	}
 }

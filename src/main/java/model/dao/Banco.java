@@ -6,6 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Classe criada na disciplina de POO (2019/1).
@@ -88,6 +92,7 @@ public class Banco {
 	 *                                incorretos.
 	 */
 	public static Connection getConnection() {
+		
 		try {
 			Connection conn = null;
 			Class.forName(DRIVER);

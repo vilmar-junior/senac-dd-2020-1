@@ -5,7 +5,7 @@ CREATE TABLE `exemplos`.`telefone` (
   `codigoPais` VARCHAR(2) NOT NULL,
   `ddd` VARCHAR(2) NOT NULL,
   `numero` VARCHAR(12) NOT NULL,
-  `tipoLinha` VARCHAR(255) NOT NULL,
+  `movel` INT(1) NOT NULL,
   `ativo` INT(1) NOT NULL,
   PRIMARY KEY (`id`));
   
