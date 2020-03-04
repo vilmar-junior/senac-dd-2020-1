@@ -46,6 +46,10 @@ ADD COLUMN `idCliente` INT NULL AFTER `ativo`;
 INSERT INTO `endereco` (`id`,`cep`,`estado`,`cidade`,`bairro`,`numero`,`rua`) 
 VALUES (1,'43294870','SC','São José','Centro','189','Rua 51');
 
+ALTER TABLE `exemplos`.`cliente` 
+ADD UNIQUE INDEX `cpf_UNIQUE` (`cpf` ASC) VISIBLE;
+
+
 INSERT INTO `endereco` (`id`,`cep`,`estado`,`cidade`,`bairro`,`numero`,`rua`) VALUES (2,'38476242','SC','Lages','Centro','515','Rua  79');
 INSERT INTO `endereco` (`id`,`cep`,`estado`,`cidade`,`bairro`,`numero`,`rua`) VALUES (3,'78529663','SC','Florianópolis','Centro','804','Rua  81');
 INSERT INTO `endereco` (`id`,`cep`,`estado`,`cidade`,`bairro`,`numero`,`rua`) VALUES (4,'39152270','SC','Lages','Centro','640','Rua 28');

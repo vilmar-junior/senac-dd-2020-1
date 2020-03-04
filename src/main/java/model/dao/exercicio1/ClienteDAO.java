@@ -36,7 +36,7 @@ public class ClienteDAO {
 			
 			// TODO ao salvar um cliente temos que marcar os telefones que ele possui!
 		} catch (SQLException e) {
-			System.out.println("Erro ao inserir novo endereço.");
+			System.out.println("Erro ao inserir novo cliente.");
 			System.out.println("Erro: " + e.getMessage());
 		}
 		
@@ -142,6 +142,24 @@ public class ClienteDAO {
 		}
 		
 		return c;
+	}
+
+	public boolean cpfJaUtilizado(String cpf) {
+		
+		Connection conexao = Banco.getConnection();
+		String sql = " select id from cliente c " + 
+				"where c.cpf = '" + cpf + "'";
+		PreparedStatement stmt = Banco.getPreparedStatement(conexao, sql);
+		boolean cpfUsado = false;
+		
+		try {
+			ResultSet rs = stmt.executeQuery();
+			cpfUsado = rs.next();
+		} catch (SQLException e) {
+			System.out.println("Erro ao verificar se CPF já foi usado. Causa: " + e.getMessage());
+		}
+		
+		return cpfUsado;
 	}
 
 }
