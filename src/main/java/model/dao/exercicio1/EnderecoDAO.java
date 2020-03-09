@@ -16,14 +16,14 @@ public class EnderecoDAO implements BaseDAO<Endereco>{
 	public Endereco salvar(Endereco novaEntidade) {
 		//Conectar no banco
 		Connection conexao = Banco.getConnection();
-		
+
 		String sql = " INSERT INTO ENDERECO (CEP, ESTADO, CIDADE, RUA, BAIRRO, NUMERO) "
 				+ " VALUES ( " 
-					+ novaEntidade.getCep() + ", " + novaEntidade.getEstado() 
-					+ "," + novaEntidade.getCidade() + ", " + novaEntidade.getRua()
-					+ "," + novaEntidade.getBairro() + "," + novaEntidade.getNumero()
+				+ novaEntidade.getCep() + ", " + novaEntidade.getEstado() 
+				+ "," + novaEntidade.getCidade() + ", " + novaEntidade.getRua()
+				+ "," + novaEntidade.getBairro() + "," + novaEntidade.getNumero()
 				+ ")";
-		
+
 		//Obter um statement
 		PreparedStatement statement = Banco.getPreparedStatement(conexao, sql );
 		try {
@@ -31,7 +31,7 @@ public class EnderecoDAO implements BaseDAO<Endereco>{
 			statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 			//Executar
 			ResultSet resultado = statement.getGeneratedKeys();
-			
+
 			if(resultado.next()) {
 				//Incluir a chave gerada na novaEntidade (coluna de posição 1)
 				novaEntidade.setId(resultado.getInt(1));
@@ -39,7 +39,7 @@ public class EnderecoDAO implements BaseDAO<Endereco>{
 		} catch (SQLException e) {
 			System.out.println(" Erro ao salvar novo endereço. Causa: " + e.getMessage());
 		}
-		 
+
 		return novaEntidade;
 	}
 
@@ -54,16 +54,15 @@ public class EnderecoDAO implements BaseDAO<Endereco>{
 	}
 
 	public Endereco consultarPorId(int id) {
+		String sql = " SELECT * FROM endereco WHERE id = ?";
+
 		Connection conexao = Banco.getConnection();
-		
-		String sql = " SELECT id, cep, bairro, cidade, estado "
-				+ " FROM endereco WHERE id = ?";
 		PreparedStatement preparedStatement = Banco.getPreparedStatement(conexao, sql);
 		Endereco enderecoConsultado = null;
 		try {
 			preparedStatement.setInt(1, id);
 			ResultSet conjuntoResultante = preparedStatement.executeQuery();
-			
+
 			if(conjuntoResultante.next()) {
 				enderecoConsultado = construirEnderecoDoResultSet(conjuntoResultante);
 			}
@@ -82,6 +81,8 @@ public class EnderecoDAO implements BaseDAO<Endereco>{
 			e.setBairro(conjuntoResultante.getString("bairro"));
 			e.setCidade(conjuntoResultante.getString("cidade"));
 			e.setEstado(conjuntoResultante.getString("estado"));
+			e.setRua(conjuntoResultante.getString("rua"));
+			e.setNumero(conjuntoResultante.getString("numero"));
 		} catch (SQLException ex) {
 			System.out.println(" Erro ao construir endereço a partir do ResultSet. Causa: " + ex.getMessage());
 		}
@@ -89,8 +90,22 @@ public class EnderecoDAO implements BaseDAO<Endereco>{
 	}
 
 	public ArrayList<Endereco> consultarTodos() {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = " SELECT * FROM endereco ";
+
+		Connection conexao = Banco.getConnection();
+		PreparedStatement preparedStatement = Banco.getPreparedStatement(conexao, sql);
+		ArrayList<Endereco> enderecos = new ArrayList<Endereco>();
+		try {
+			ResultSet conjuntoResultante = preparedStatement.executeQuery();
+
+			while(conjuntoResultante.next()) {
+				Endereco enderecoConsultado = construirEnderecoDoResultSet(conjuntoResultante);
+				enderecos.add(enderecoConsultado);
+			}
+		} catch (SQLException ex) {
+			System.out.println(" Erro ao consultar endereços. Causa: " + ex.getMessage());
+		}
+		return enderecos;
 	}
 
 }
