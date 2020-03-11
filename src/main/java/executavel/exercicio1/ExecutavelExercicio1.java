@@ -59,7 +59,7 @@ public class ExecutavelExercicio1 {
 		Telefone novoTelefone = new Telefone();
 
 		String codigoPais = JOptionPane.showInputDialog("Informe o código do país");
-		String ddd = JOptionPane.showInputDialog("Informe o DDD");
+		String ddd = JOptionPane.showInputDialog("Informe o DDD (2 dígitos)");
 		String numero = JOptionPane.showInputDialog("Informe o número");
 		int opcaoMovel = JOptionPane.showConfirmDialog(null, "O telefone é móvel?", "Selecione",
 				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null);
