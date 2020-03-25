@@ -1,6 +1,7 @@
 package view.exercicio1;
 
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
@@ -15,6 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
+
+import controller.exercicio1.EnderecoController;
 
 public class TelaCadastroEndereco extends JFrame {
 
@@ -48,37 +51,45 @@ public class TelaCadastroEndereco extends JFrame {
 	public TelaCadastroEndereco() {
 		setTitle("Cadastro de endereço");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 190);
+		setBounds(100, 100, 450, 220);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblRua = new JLabel("Rua:");
+		JLabel lblRua = new JLabel("Rua (*): ");
 		lblRua.setBounds(10, 15, 50, 16);
 		contentPane.add(lblRua);
 
-		JLabel lblBairro = new JLabel("Bairro:");
+		JLabel lblBairro = new JLabel("Bairro (*):");
 		lblBairro.setBounds(10, 45, 50, 16);
 		contentPane.add(lblBairro);
 
-		JLabel lblCidade = new JLabel("Cidade:");
+		JLabel lblCidade = new JLabel("Cidade (*):");
 		lblCidade.setBounds(10, 75, 50, 16);
 		contentPane.add(lblCidade);
 
-		JLabel lblEstado = new JLabel("Estado:");
+		JLabel lblEstado = new JLabel("Estado (*):");
 		lblEstado.setBounds(270, 80, 60, 16);
 		contentPane.add(lblEstado);
 
-		JLabel lblNumero = new JLabel("Número:");
+		JLabel lblNumero = new JLabel("Número (*):");
 		lblNumero.setBounds(270, 15, 60, 16);
 		contentPane.add(lblNumero);
 
-		JLabel lblCep = new JLabel("CEP:");
+		JLabel lblCep = new JLabel("CEP (*):");
 		lblCep.setBounds(270, 45, 60, 16);
 		contentPane.add(lblCep);
 
 		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EnderecoController controller = new EnderecoController();
+				controller.salvar(txtRua.getText(), txtBairro.getText(), txtNumero.getText(), txtCep.getText(),
+						txtCidade.getText(), (String) cbSiglaEstado.getSelectedItem());
+
+			}
+		});
 		btnSalvar.setBounds(105, 123, 117, 29);
 		contentPane.add(btnSalvar);
 
@@ -129,6 +140,11 @@ public class TelaCadastroEndereco extends JFrame {
 		cbSiglaEstado = new JComboBox(siglasEstados.toArray());
 		cbSiglaEstado.setBounds(330, 70, 110, 27);
 		contentPane.add(cbSiglaEstado);
+
+		JLabel lblCamposObrigatorios = new JLabel("(*) campos obrigatórios");
+		lblCamposObrigatorios.setFont(new Font("Lucida Grande", Font.ITALIC, 11));
+		lblCamposObrigatorios.setBounds(20, 164, 200, 16);
+		contentPane.add(lblCamposObrigatorios);
 	}
 
 	protected void limparCampos() {
@@ -141,10 +157,12 @@ public class TelaCadastroEndereco extends JFrame {
 
 		// Campos com combobox: "setar" o índice selecionado para -1 (sem item
 		// selecionado no combo)
-		this.cbSiglaEstado.setSelectedIndex(-1);
+		this.cbSiglaEstado.setSelectedIndex(0);
 	}
 
 	private ArrayList<String> consultarEstados() {
+		// TODO o ideal é consultar numa tabela estes dados...
+
 		ArrayList<String> siglasEstados = new ArrayList<String>();
 
 		siglasEstados.add("AC");

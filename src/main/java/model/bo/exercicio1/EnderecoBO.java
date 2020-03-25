@@ -1,6 +1,7 @@
 package model.bo.exercicio1;
 
 import model.dao.exercicio1.EnderecoDAO;
+import model.vo.exercicio1.Endereco;
 
 public class EnderecoBO {
 
@@ -16,6 +17,20 @@ public class EnderecoBO {
 			}
 		} else {
 			mensagem = "Id informado (" + idSelecionado + ") não existe no banco.";
+		}
+
+		return mensagem;
+	}
+
+	public String salvar(Endereco novoEndereco) {
+		String mensagem = "";
+
+		novoEndereco = dao.salvar(novoEndereco);
+
+		if (novoEndereco.getId() > 0) {
+			mensagem = "Salvo com sucesso";
+		} else {
+			mensagem = "Erro ao salvar";
 		}
 
 		return mensagem;
