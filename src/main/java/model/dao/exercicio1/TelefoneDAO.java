@@ -106,7 +106,7 @@ public class TelefoneDAO {
 
 	public boolean alterar(Telefone telefone) {
 		Connection conn = Banco.getConnection();
-		String sql = " UPDATE TELEFONE " + " SET codigoPais=?, ddd=?, numero=?, tipoLinha=?, idCliente=?, ativo=? "
+		String sql = " UPDATE TELEFONE " + " SET codigoPais=?, ddd=?, numero=?, movel=?, idCliente=?, ativo=? "
 				+ " WHERE ID=? ";
 
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
@@ -135,7 +135,7 @@ public class TelefoneDAO {
 
 	public Telefone consultarPorId(int id) {
 		Connection conn = Banco.getConnection();
-		String sql = " SELECT id, codigoPais, ddd, numero, tipoLinha, idCliente, ativo " + " FROM TELEFONE "
+		String sql = " SELECT id, codigoPais, ddd, numero, movel, idCliente, ativo " + " FROM TELEFONE "
 				+ " WHERE ID=" + id;
 
 		Statement stmt = Banco.getStatement(conn);
@@ -158,7 +158,7 @@ public class TelefoneDAO {
 
 	public ArrayList<Telefone> consultarTodos() {
 		Connection conn = Banco.getConnection();
-		String sql = " SELECT id, codigoPais, ddd, numero, tipoLinha, idCliente, ativo " + " FROM TELEFONE ";
+		String sql = " SELECT id, codigoPais, ddd, numero, movel, idCliente, ativo " + " FROM TELEFONE ";
 
 		Statement stmt = Banco.getStatement(conn);
 		ArrayList<Telefone> telefones = new ArrayList<Telefone>();
@@ -180,7 +180,7 @@ public class TelefoneDAO {
 
 	public ArrayList<Telefone> consultarTodosPorIdCliente(int idCliente) {
 		Connection conn = Banco.getConnection();
-		String sql = " SELECT id, codigoPais, ddd, numero, tipoLinha, idCliente, ativo " + " FROM TELEFONE "
+		String sql = " SELECT id, codigoPais, ddd, numero, movel, idCliente, ativo " + " FROM TELEFONE "
 				+ " WHERE IDCLIENTE = " + idCliente;
 
 		Statement stmt = Banco.getStatement(conn);
