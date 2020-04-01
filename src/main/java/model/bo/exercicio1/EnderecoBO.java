@@ -1,5 +1,6 @@
 package model.bo.exercicio1;
 
+import model.dao.exercicio1.ClienteDAO;
 import model.dao.exercicio1.EnderecoDAO;
 import model.vo.exercicio1.Endereco;
 
@@ -9,14 +10,16 @@ public class EnderecoBO {
 
 	public String excluir(int idSelecionado) {
 		String mensagem = "";
-		if (dao.temEnderecoCadastradoComId(idSelecionado)) {
+
+		ClienteDAO clienteDAO = new ClienteDAO();
+		if (clienteDAO.temClienteMorandoNoEndereco(idSelecionado)) {
+			mensagem = "Endereço informado não pode ser excluído, pois existe cliente morando nele.";
+		} else {
 			if (dao.excluir(idSelecionado)) {
 				mensagem = "Excluído com sucesso";
 			} else {
 				mensagem = "Erro ao excluir";
 			}
-		} else {
-			mensagem = "Id informado (" + idSelecionado + ") não existe no banco.";
 		}
 
 		return mensagem;

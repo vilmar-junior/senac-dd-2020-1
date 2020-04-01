@@ -33,8 +33,10 @@ public class ClienteDAO {
 				int idGerado = rs.getInt(1);
 				novoCliente.setId(idGerado);
 
-				TelefoneDAO telefoneDAO = new TelefoneDAO();
-				telefoneDAO.ativarTelefones(novoCliente, novoCliente.getTelefones());
+				if (!novoCliente.getTelefones().isEmpty()) {
+					TelefoneDAO telefoneDAO = new TelefoneDAO();
+					telefoneDAO.ativarTelefones(novoCliente, novoCliente.getTelefones());
+				}
 			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao inserir novo cliente.");
@@ -165,7 +167,6 @@ public class ClienteDAO {
 	}
 
 	public boolean cpfJaUtilizado(String cpf) {
-		
 		Connection conexao = Banco.getConnection();
 		String sql = " select id from cliente c " + 
 				"where c.cpf = '" + cpf + "'";
@@ -180,5 +181,22 @@ public class ClienteDAO {
 		}
 		
 		return cpfUsado;
+	}
+
+	public boolean temClienteMorandoNoEndereco(int idEndereco) {
+		Connection conexao = Banco.getConnection();
+		String sql = " SELECT id FROM CLIENTE c " + " WHERE c.idEndereco = " + idEndereco;
+		PreparedStatement stmt = Banco.getPreparedStatement(conexao, sql);
+
+		boolean enderecoJaUsado = false;
+
+		try {
+			ResultSet rs = stmt.executeQuery();
+			enderecoJaUsado = rs.next();
+		} catch (SQLException e) {
+			System.out.println("Erro ao verificar se endereço já foi usado. Causa: " + e.getMessage());
+		}
+
+		return enderecoJaUsado;
 	}
 }
