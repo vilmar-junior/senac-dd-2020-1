@@ -20,4 +20,5 @@ public class TelefoneBO {
 		return mensagem;
 	}
 
+	// TODO criar os métodos para chamar os métodos PÚBLICOS no TelefoneDAO
 }

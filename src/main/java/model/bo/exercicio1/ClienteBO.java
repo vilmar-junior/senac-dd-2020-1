@@ -13,4 +13,5 @@ public class ClienteBO {
 		return dao.consultarTodos();
 	}
 
+	// TODO criar os métodos para chamar os métodos PÚBLICOS no ClienteDAO
 }

@@ -16,8 +16,8 @@ public class TelefoneDAO {
 	public Telefone salvar(Telefone novoTelefone) {
 		
 		Connection conn = Banco.getConnection();
-		String sql = "INSERT INTO TELEFONE (codigoPais, ddd, numero, movel, idCliente, ativo) "
-				+ "VALUES (?,?,?,?,?,?)";
+		String sql = " INSERT INTO TELEFONE (codigoPais, ddd, numero, movel, idCliente, ativo) "
+				+ " VALUES (?,?,?,?,?,?) ";
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
 		try {
@@ -50,7 +50,7 @@ public class TelefoneDAO {
 
 	public boolean excluir(int id) {
 		Connection conn = Banco.getConnection();
-		String sql = "DELETE FROM TELEFONE WHERE ID=" + id;
+		String sql = " DELETE FROM TELEFONE WHERE ID= " + id;
 		Statement stmt = Banco.getStatement(conn);
 
 		int quantidadeLinhasAfetadas = 0;
@@ -91,7 +91,7 @@ public class TelefoneDAO {
 	 */
 	public void desativarTelefones(int idCliente) {
 		Connection conn = Banco.getConnection();
-		String sql = " UPDATE TELEFONE " + " SET idCliente=0, ativo=0 " + " WHERE IDCLIENTE=? ";
+		String sql = " UPDATE TELEFONE SET idCliente=NULL, ativo=0 WHERE IDCLIENTE=? ";
 
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
 

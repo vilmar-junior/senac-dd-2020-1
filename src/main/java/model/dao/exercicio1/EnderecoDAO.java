@@ -14,23 +14,18 @@ import model.vo.exercicio1.Endereco;
 public class EnderecoDAO implements BaseDAO<Endereco> {
 
 	public Endereco salvar(Endereco novaEntidade) {
-		// Conectar no banco
 		Connection conexao = Banco.getConnection();
 
 		String sql = " INSERT INTO ENDERECO (CEP, ESTADO, CIDADE, RUA, BAIRRO, NUMERO) " + " VALUES ( "
 				+ novaEntidade.getCep() + ", " + novaEntidade.getEstado() + "," + novaEntidade.getCidade() + ", "
 				+ novaEntidade.getRua() + "," + novaEntidade.getBairro() + "," + novaEntidade.getNumero() + ")";
 
-		// Obter um statement
 		PreparedStatement statement = Banco.getPreparedStatement(conexao, sql);
 		try {
-			// Fazer o INSERT
 			statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
-			// Executar
 			ResultSet resultado = statement.getGeneratedKeys();
 
 			if (resultado.next()) {
-				// Incluir a chave gerada na novaEntidade (coluna de posição 1)
 				novaEntidade.setId(resultado.getInt(1));
 			}
 		} catch (SQLException e) {
@@ -57,9 +52,28 @@ public class EnderecoDAO implements BaseDAO<Endereco> {
 		return excluiu;
 	}
 
-	public boolean alterar(Endereco entidade) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean alterar(Endereco endereco) {
+		Connection conexao = Banco.getConnection();
+		String sql = " UPDATE ENDERECO SET CEP=?, ESTADO=?, CIDADE=?, RUA=?, BAIRRO=?, NUMERO=? WHERE ID = ?";
+		PreparedStatement stmt = Banco.getPreparedStatement(conexao, sql);
+		int registrosAlterados = 0;
+
+		try {
+			stmt.setString(1, endereco.getCep());
+			stmt.setString(2, endereco.getEstado());
+			stmt.setString(3, endereco.getCidade());
+			stmt.setString(4, endereco.getRua());
+			stmt.setString(5, endereco.getBairro());
+			stmt.setString(6, endereco.getNumero());
+			stmt.setInt(7, endereco.getId());
+
+			registrosAlterados = stmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("Erro ao inserir novo cliente.");
+			System.out.println("Erro: " + e.getMessage());
+		}
+
+		return registrosAlterados > 0;
 	}
 
 	public Endereco consultarPorId(int id) {
