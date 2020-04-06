@@ -17,6 +17,11 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.FormSpecs;
+import com.jgoodies.forms.layout.RowSpec;
+
 import controller.exercicio1.EnderecoController;
 
 public class TelaCadastroEndereco extends JFrame {
@@ -51,35 +56,41 @@ public class TelaCadastroEndereco extends JFrame {
 	public TelaCadastroEndereco() {
 		setTitle("Cadastro de endereço");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 220);
+		setBounds(100, 100, 623, 218);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+
+		// Força a inicialização da tela MAXIMIZADA
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+		contentPane.setLayout(new FormLayout(
+				new ColumnSpec[] { FormSpecs.UNRELATED_GAP_COLSPEC, ColumnSpec.decode("80px"),
+						FormSpecs.LABEL_COMPONENT_GAP_COLSPEC, ColumnSpec.decode("200px:grow"),
+						FormSpecs.UNRELATED_GAP_COLSPEC, ColumnSpec.decode("15px"), FormSpecs.UNRELATED_GAP_COLSPEC,
+						ColumnSpec.decode("80px"), ColumnSpec.decode("200px:grow"), },
+				new RowSpec[] { FormSpecs.UNRELATED_GAP_ROWSPEC, RowSpec.decode("28px"),
+						FormSpecs.LABEL_COMPONENT_GAP_ROWSPEC, RowSpec.decode("28px"),
+						FormSpecs.LABEL_COMPONENT_GAP_ROWSPEC, RowSpec.decode("28px"), RowSpec.decode("25px"),
+						RowSpec.decode("29px"), FormSpecs.UNRELATED_GAP_ROWSPEC, RowSpec.decode("16px"), }));
 
 		JLabel lblRua = new JLabel("Rua (*): ");
-		lblRua.setBounds(10, 15, 50, 16);
-		contentPane.add(lblRua);
+		contentPane.add(lblRua, "2, 2, fill, center");
 
 		JLabel lblBairro = new JLabel("Bairro (*):");
-		lblBairro.setBounds(10, 45, 50, 16);
-		contentPane.add(lblBairro);
+		contentPane.add(lblBairro, "2, 4, left, center");
 
 		JLabel lblCidade = new JLabel("Cidade (*):");
-		lblCidade.setBounds(10, 75, 50, 16);
-		contentPane.add(lblCidade);
+		contentPane.add(lblCidade, "2, 6, right, center");
 
 		JLabel lblEstado = new JLabel("Estado (*):");
-		lblEstado.setBounds(270, 80, 60, 16);
-		contentPane.add(lblEstado);
+		contentPane.add(lblEstado, "8, 6, fill, bottom");
 
 		JLabel lblNumero = new JLabel("Número (*):");
-		lblNumero.setBounds(270, 15, 60, 16);
-		contentPane.add(lblNumero);
+		contentPane.add(lblNumero, "8, 2, fill, center");
 
 		JLabel lblCep = new JLabel("CEP (*):");
-		lblCep.setBounds(270, 45, 60, 16);
-		contentPane.add(lblCep);
+		contentPane.add(lblCep, "8, 4, fill, center");
 
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
@@ -90,8 +101,7 @@ public class TelaCadastroEndereco extends JFrame {
 
 			}
 		});
-		btnSalvar.setBounds(105, 123, 117, 29);
-		contentPane.add(btnSalvar);
+		contentPane.add(btnSalvar, "2, 8, 3, 1, fill, fill");
 
 		JButton btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
@@ -100,27 +110,22 @@ public class TelaCadastroEndereco extends JFrame {
 			}
 
 		});
-		btnLimpar.setBounds(234, 123, 117, 29);
-		contentPane.add(btnLimpar);
+		contentPane.add(btnLimpar, "6, 8, 4, 1, fill, fill");
 
 		txtRua = new JTextField();
-		txtRua.setBounds(62, 10, 200, 28);
-		contentPane.add(txtRua);
+		contentPane.add(txtRua, "4, 2, fill, top");
 		txtRua.setColumns(10);
 
 		txtBairro = new JTextField();
-		txtBairro.setBounds(62, 40, 200, 28);
-		contentPane.add(txtBairro);
+		contentPane.add(txtBairro, "4, 4, fill, top");
 		txtBairro.setColumns(10);
 
 		txtCidade = new JTextField();
-		txtCidade.setBounds(62, 70, 200, 28);
-		contentPane.add(txtCidade);
+		contentPane.add(txtCidade, "4, 6, fill, top");
 		txtCidade.setColumns(10);
 
 		txtNumero = new JTextField();
-		txtNumero.setBounds(330, 10, 110, 28);
-		contentPane.add(txtNumero);
+		contentPane.add(txtNumero, "9, 2, center, top");
 		txtNumero.setColumns(10);
 
 		// O campo está sem máscara
@@ -128,8 +133,7 @@ public class TelaCadastroEndereco extends JFrame {
 			MaskFormatter mascaraCep = new MaskFormatter("#####-###");
 
 			txtCep = new JFormattedTextField(mascaraCep);
-			txtCep.setBounds(330, 40, 110, 28);
-			contentPane.add(txtCep);
+			contentPane.add(txtCep, "9, 4, fill, center");
 
 		} catch (ParseException e) {
 			// TODO por enquanto não vamos tratar
@@ -138,13 +142,11 @@ public class TelaCadastroEndereco extends JFrame {
 
 		ArrayList<String> siglasEstados = consultarEstados();
 		cbSiglaEstado = new JComboBox(siglasEstados.toArray());
-		cbSiglaEstado.setBounds(330, 70, 110, 27);
-		contentPane.add(cbSiglaEstado);
+		contentPane.add(cbSiglaEstado, "9, 6, fill, fill");
 
 		JLabel lblCamposObrigatorios = new JLabel("(*) campos obrigatórios");
 		lblCamposObrigatorios.setFont(new Font("Lucida Grande", Font.ITALIC, 11));
-		lblCamposObrigatorios.setBounds(20, 164, 200, 16);
-		contentPane.add(lblCamposObrigatorios);
+		contentPane.add(lblCamposObrigatorios, "2, 10, 3, 1, fill, fill");
 	}
 
 	protected void limparCampos() {

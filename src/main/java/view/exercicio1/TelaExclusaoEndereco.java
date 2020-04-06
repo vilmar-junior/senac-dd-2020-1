@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import controller.exercicio1.EnderecoController;
+import net.miginfocom.swing.MigLayout;
 
 public class TelaExclusaoEndereco {
 
@@ -49,16 +50,14 @@ public class TelaExclusaoEndereco {
 		frmExclusaoEnderecos.setTitle("Exclusão de endereços");
 		frmExclusaoEnderecos.setBounds(100, 100, 310, 200);
 		frmExclusaoEnderecos.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmExclusaoEnderecos.getContentPane().setLayout(null);
+		frmExclusaoEnderecos.getContentPane().setLayout(new MigLayout("", "[80px][10px][150px]", "[20px][70px]"));
 
 		JLabel lblIdEndereco = new JLabel("Informe o id:");
 		lblIdEndereco.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblIdEndereco.setBounds(30, 30, 80, 15);
-		frmExclusaoEnderecos.getContentPane().add(lblIdEndereco);
+		frmExclusaoEnderecos.getContentPane().add(lblIdEndereco, "cell 0 0,alignx left,aligny top");
 
 		txtIdEndereco = new JTextField();
-		txtIdEndereco.setBounds(120, 30, 150, 20);
-		frmExclusaoEnderecos.getContentPane().add(txtIdEndereco);
+		frmExclusaoEnderecos.getContentPane().add(txtIdEndereco, "cell 2 0,grow");
 		txtIdEndereco.setColumns(10);
 
 		JButton btnExcluir = new JButton("Excluir");
@@ -70,7 +69,6 @@ public class TelaExclusaoEndereco {
 				JOptionPane.showMessageDialog(null, mensagem);
 			}
 		});
-		btnExcluir.setBounds(30, 80, 240, 70);
-		frmExclusaoEnderecos.getContentPane().add(btnExcluir);
+		frmExclusaoEnderecos.getContentPane().add(btnExcluir, "cell 0 1 3 1,grow");
 	}
 }
