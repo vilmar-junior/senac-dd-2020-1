@@ -217,8 +217,10 @@ public class TelefoneDAO {
 			telefone.setId(resultadoDaConsulta.getInt("id"));
 
 			ClienteDAO cDAO = new ClienteDAO();
-			Cliente donoDoTelefone = cDAO.consultarPorId(resultadoDaConsulta.getInt("idCliente"));
-			telefone.setDono(donoDoTelefone);
+			// TODO problema com looping
+			// Cliente donoDoTelefone =
+			// cDAO.consultarPorId(resultadoDaConsulta.getInt("idCliente"));
+			// telefone.setDono(donoDoTelefone);
 			telefone.setCodigoPais(resultadoDaConsulta.getString("codigoPais"));
 			telefone.setDdd(resultadoDaConsulta.getString("ddd"));
 			telefone.setNumero(resultadoDaConsulta.getString("numero"));
