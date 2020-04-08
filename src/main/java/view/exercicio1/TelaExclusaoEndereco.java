@@ -66,6 +66,7 @@ public class TelaExclusaoEndereco {
 				EnderecoController controladora = new EnderecoController();
 
 				String mensagem = controladora.excluir(txtIdEndereco.getText());
+
 				JOptionPane.showMessageDialog(null, mensagem);
 			}
 		});

@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -96,9 +97,11 @@ public class TelaCadastroEndereco extends JFrame {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				EnderecoController controller = new EnderecoController();
-				controller.salvar(txtRua.getText(), txtBairro.getText(), txtNumero.getText(), txtCep.getText(),
+				String mensagem = controller.salvar(txtRua.getText(), txtBairro.getText(), txtNumero.getText(),
+						txtCep.getText(),
 						txtCidade.getText(), (String) cbSiglaEstado.getSelectedItem());
 
+				JOptionPane.showMessageDialog(null, mensagem);
 			}
 		});
 		contentPane.add(btnSalvar, "2, 8, 3, 1, fill, fill");
