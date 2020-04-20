@@ -1,6 +1,5 @@
 package view.aula10;
 
-import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,9 +13,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
+import view.aula10.paineis.PainelCadastroTelefone;
+
 public class MenuPrincipal extends JFrame {
 
 	private JDesktopPane desktopPane;
+	private PainelCadastroTelefone painelCadastroTelefone;
 
 	/**
 	 * Launch the application.
@@ -62,6 +64,29 @@ public class MenuPrincipal extends JFrame {
 				new ImageIcon(MenuPrincipal.class.getResource("/icones/icons8-adicionar-usuário-masculino.png")));
 		menuCliente.add(miCadastrarCliente);
 
+		JMenu menuTelefone = new JMenu("Telefones");
+		menuTelefone.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/icones/icons8-cardápio.png")));
+
+		JMenuItem miCadastrarTelefone = new JMenuItem("Cadastrar");
+		miCadastrarTelefone.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// instanciar o painel de cadastro de telefones
+				painelCadastroTelefone = new PainelCadastroTelefone();
+
+				// alterar o contentPane da tela principal, mostrando o painel de cadastro de
+				// telefones
+				setContentPane(painelCadastroTelefone);
+				revalidate();
+			}
+		});
+				
+		miCadastrarTelefone.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, 0));
+		miCadastrarTelefone.setIcon(
+				new ImageIcon(MenuPrincipal.class.getResource("/icones/icons8-adicionar-ao-banco-de-dados.png")));
+
+		menuTelefone.add(miCadastrarTelefone);
+		menuBar.add(menuTelefone);
+
 		JMenu menuSobre = new JMenu("Sobre");
 		menuSobre.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/icones/icons8-confiança.png")));
 		menuBar.add(menuSobre);
@@ -76,12 +101,17 @@ public class MenuPrincipal extends JFrame {
 				janelaSobre.setVisible(true);
 			}
 		});
+
 		menuSobre.add(miAutor);
 
-		desktopPane = new JDesktopPane();
-		desktopPane.setBackground(Color.GRAY);
-		desktopPane.setBounds(5, 5, 1000, 800);
+		/*
+		 * TODO usar apenas na opção 2 da aula 10
+		 * 
+		 * desktopPane = new JDesktopPane();
+		 * 
+		 * desktopPane.setBackground(Color.GRAY); desktopPane.setBounds(5, 5, 1000,
+		 * 800); getContentPane().add(desktopPane);
+		 */
 		
-		getContentPane().add(desktopPane);
 	}
 }
