@@ -53,7 +53,7 @@ public class PainelCadastroTelefone extends JPanel {
 		add(lblCodigoPais, "4, 4");
 
 		txtCodigoPais = new JTextField();
-		add(txtCodigoPais, "8, 4, fill, default");
+		add(txtCodigoPais, "8, 4");
 		txtCodigoPais.setColumns(10);
 
 		JLabel lblDdd = new JLabel("DDD");
