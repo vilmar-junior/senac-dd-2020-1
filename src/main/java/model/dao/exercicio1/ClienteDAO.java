@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.dao.Banco;
+import model.exercicio1.seletor.ClienteSeletor;
 import model.vo.exercicio1.Cliente;
 import model.vo.exercicio1.Endereco;
 import model.vo.exercicio1.Telefone;
@@ -133,6 +134,75 @@ public class ClienteDAO {
 		}
 		
 		return clientes;
+	}
+
+	public ArrayList<Cliente> consultarPorSeletor(ClienteSeletor seletor) {
+		Connection conexao = Banco.getConnection();
+		String sql = " SELECT * FROM CLIENTE C ";
+
+		if (seletor.temFiltro()) {
+			sql = criarFiltros(sql, seletor);
+		}
+
+		PreparedStatement stmt = Banco.getPreparedStatement(conexao, sql);
+
+		ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+		try {
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Cliente c = construirClienteDoResultSet(rs);
+				clientes.add(c);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Erro ao consultar clientes.");
+			System.out.println("Erro: " + e.getMessage());
+		}
+
+		return clientes;
+	}
+
+	/**
+	 * Recebe uma query de base (somente o SELECT) e inclui os filtros conforme os
+	 * atributos do seletor
+	 * 
+	 * @param sql     a consulta básica
+	 * @param seletor objeto que encapsula todos os possíveis valores selecionados
+	 *                para a filtragem.
+	 * 
+	 * @return a query completa (base + filtros)
+	 */
+	private String criarFiltros(String sql, ClienteSeletor seletor) {
+
+		boolean primeiro = true;
+		sql += " WHERE ";
+
+		if (seletor.getNome() != null && seletor.getNome().trim().length() > 0) {
+			if (!primeiro) {
+				sql += " AND ";
+			}
+
+			sql += " C.NOME LIKE " + "'%" + seletor.getNome() + "%' ";
+			primeiro = false;
+		}
+
+		if (seletor.getSobrenome() != null && seletor.getSobrenome().trim().length() > 0) {
+			if (!primeiro) {
+				sql += " AND ";
+			}
+
+			sql += " C.SOBRENOME LIKE " + "'%" + seletor.getSobrenome() + "%' ";
+		}
+
+		if (seletor.getCpf() != null && seletor.getCpf().trim().length() > 0) {
+			if (!primeiro) {
+				sql += " AND ";
+			}
+
+			sql += " C.CPF LIKE " + "'%" + seletor.getCpf() + "%' ";
+		}
+
+		return sql;
 	}
 
 	/**
