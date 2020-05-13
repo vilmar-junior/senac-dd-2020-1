@@ -1,6 +1,8 @@
 package executavel.exercicio1;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.swing.JOptionPane;
 
@@ -92,6 +94,7 @@ public class ExecutavelExercicio1 {
 		String nome = JOptionPane.showInputDialog("Informe o nome");
 		String sobrenome = JOptionPane.showInputDialog("Informe o sobrenome");
 		String cpf = JOptionPane.showInputDialog("Informe o CPF");
+		String stringDataNascimento = JOptionPane.showInputDialog("Informe a data de nascimento (dd/MM/yyyy)");
 
 		EnderecoDAO endDAO = new EnderecoDAO();
 		ArrayList<Endereco> listaEnderecos = endDAO.consultarTodos();
@@ -100,7 +103,15 @@ public class ExecutavelExercicio1 {
 		Endereco enderecoSelecionado = (Endereco) JOptionPane.showInputDialog(null, "Selecione um endereço", "Endereço",
 				JOptionPane.QUESTION_MESSAGE, null, enderecos, null);
 
-		Cliente novoCliente = new Cliente(nome, sobrenome, cpf, new ArrayList<Telefone>(), enderecoSelecionado);
+		// TODO criar um método melhor para criar a data
+		String[] partesDataNascimento = stringDataNascimento.split("/");
+		Calendar cal = Calendar.getInstance();
+		cal.set(Integer.parseInt(partesDataNascimento[2]), Integer.parseInt(partesDataNascimento[1]),
+				Integer.parseInt(partesDataNascimento[0]));
+		LocalDate dataNascimento = LocalDate.of(Integer.parseInt(partesDataNascimento[2]),
+				Integer.parseInt(partesDataNascimento[1]), Integer.parseInt(partesDataNascimento[0]));
+		Cliente novoCliente = new Cliente(nome, sobrenome, cpf, new ArrayList<Telefone>(), enderecoSelecionado,
+				dataNascimento);
 
 		return novoCliente;
 	}

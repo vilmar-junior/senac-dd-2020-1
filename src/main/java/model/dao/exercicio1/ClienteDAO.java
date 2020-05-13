@@ -17,7 +17,7 @@ public class ClienteDAO {
 
 	public Cliente salvar(Cliente novoCliente) {
 		Connection conexao = Banco.getConnection();
-		String sql = " INSERT INTO CLIENTE(NOME, SOBRENOME, CPF, IDENDERECO) "
+		String sql = " INSERT INTO CLIENTE(NOME, SOBRENOME, CPF, IDENDERECO, DATANASCIMENTO) "
 				+ " VALUES (?,?,?,?) ";
 		PreparedStatement stmt = Banco.getPreparedStatement(conexao, sql, 
 				PreparedStatement.RETURN_GENERATED_KEYS);
@@ -26,6 +26,7 @@ public class ClienteDAO {
 			stmt.setString(2, novoCliente.getSobrenome());
 			stmt.setString(3, novoCliente.getCpf());
 			stmt.setInt(4, novoCliente.getEndereco().getId());
+			stmt.setDate(5, java.sql.Date.valueOf(novoCliente.getDataNascimento()));
 			stmt.execute();
 			
 			ResultSet rs = stmt.getGeneratedKeys();
@@ -72,7 +73,7 @@ public class ClienteDAO {
 
 	public boolean alterar(Cliente cliente) {
 		Connection conexao = Banco.getConnection();
-		String sql = " UPDATE CLIENTE SET NOME=?, SOBRENOME=?, CPF=?, IDENDERECO=? "
+		String sql = " UPDATE CLIENTE SET NOME=?, SOBRENOME=?, CPF=?, IDENDERECO=?, DATANASCIMENTO=? "
 				+ " WHERE ID = ?";
 		PreparedStatement stmt = Banco.getPreparedStatement(conexao, sql);
 		int registrosAlterados = 0;
@@ -81,7 +82,8 @@ public class ClienteDAO {
 			stmt.setString(2, cliente.getSobrenome());
 			stmt.setString(3, cliente.getCpf());
 			stmt.setInt(4, cliente.getEndereco().getId());
-			stmt.setInt(5, cliente.getId());
+			stmt.setDate(5, java.sql.Date.valueOf(cliente.getDataNascimento()));
+			stmt.setInt(6, cliente.getId());
 			registrosAlterados = stmt.executeUpdate();
 			 
 			TelefoneDAO telefoneDAO = new TelefoneDAO();
@@ -202,6 +204,25 @@ public class ClienteDAO {
 			sql += " C.CPF LIKE " + "'%" + seletor.getCpf() + "%' ";
 		}
 
+		if (seletor.getDataNascimentoInicial() != null || seletor.getDataNascimentoFinal() != null) {
+			if (!primeiro) {
+				sql += " AND ";
+			}
+
+			if (seletor.getDataNascimentoInicial() != null && seletor.getDataNascimentoFinal() != null) {
+				sql += "C.DATANASCIMENTO BETWEEN '" + seletor.getDataNascimentoInicial() + "' AND '"
+						+ seletor.getDataNascimentoFinal() + "'";
+			} else {
+				if (seletor.getDataNascimentoInicial() == null) {
+					sql += "C.DATANASCIMENTO <= '" + seletor.getDataNascimentoFinal() + "'";
+				}
+
+				if (seletor.getDataNascimentoFinal() == null) {
+					sql += "C.DATANASCIMENTO >= '" + seletor.getDataNascimentoInicial() + "'";
+				}
+			}
+		}
+
 		return sql;
 	}
 
@@ -221,6 +242,7 @@ public class ClienteDAO {
 			c.setNome(rs.getString("nome"));
 			c.setSobrenome(rs.getString("sobrenome"));
 			c.setCpf(rs.getString("cpf"));
+			c.setDataNascimento(rs.getDate("dataNascimento").toLocalDate());
 
 			EnderecoDAO enderecoDAO = new EnderecoDAO();
 			Endereco end = enderecoDAO.consultarPorId(rs.getInt("idendereco"));
