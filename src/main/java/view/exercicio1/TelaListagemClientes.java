@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -84,7 +85,7 @@ public class TelaListagemClientes {
 	private void initialize() {
 		frmListagemDeClientes = new JFrame();
 		frmListagemDeClientes.setTitle("Listagem de Clientes");
-		frmListagemDeClientes.setBounds(100, 100, 700, 520);
+		frmListagemDeClientes.setBounds(100, 100, 700, 600);
 		frmListagemDeClientes.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmListagemDeClientes.getContentPane().setLayout(null);
 
@@ -103,7 +104,7 @@ public class TelaListagemClientes {
 				atualizarTabelaClientes();
 			}
 		});
-		btnBuscar.setBounds(285, 122, 120, 43);
+		btnBuscar.setBounds(285, 120, 120, 45);
 		frmListagemDeClientes.getContentPane().add(btnBuscar);
 
 		tblClientes = new JTable();
@@ -143,5 +144,23 @@ public class TelaListagemClientes {
 		dtNascimentoFinal = new DatePicker();
 		dtNascimentoFinal.setBounds(200, 90, 400, 30);
 		frmListagemDeClientes.getContentPane().add(dtNascimentoFinal);
+
+		JButton btnGerarPlanilha = new JButton("Gerar Planilha");
+		btnGerarPlanilha.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser janelaSelecaoDestinoArquivo = new JFileChooser();
+				janelaSelecaoDestinoArquivo.setDialogTitle("Selecione um destino para a planilha...");
+
+				int opcaoSelecionada = janelaSelecaoDestinoArquivo.showSaveDialog(null);
+				if (opcaoSelecionada == JFileChooser.APPROVE_OPTION) {
+					String caminhoEscolhido = janelaSelecaoDestinoArquivo.getSelectedFile().getAbsolutePath();
+
+					ClienteController controller = new ClienteController();
+					controller.gerarRelatorio(clientes, caminhoEscolhido);
+				}
+			}
+		});
+		btnGerarPlanilha.setBounds(285, 520, 120, 45);
+		frmListagemDeClientes.getContentPane().add(btnGerarPlanilha);
 	}
 }

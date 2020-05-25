@@ -1,6 +1,9 @@
 package model.bo;
 
+import java.util.ArrayList;
+
 import model.dao.exercicio1.ClienteDAO;
+import model.util.GeradorPlanilha;
 import model.vo.exercicio1.Cliente;
 
 public class ClienteBO {
@@ -29,4 +32,8 @@ public class ClienteBO {
 		return mensagem;
 	}
 
+	public void gerarRelatorio(ArrayList<Cliente> clientes, String caminhoEscolhido) {
+		GeradorPlanilha gerador = new GeradorPlanilha();
+		gerador.gerarPlanilhaClientes(clientes, caminhoEscolhido);
+	}
 }

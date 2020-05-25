@@ -41,6 +41,12 @@
 			<artifactId>LGoodDatePicker</artifactId>
 			<version>10.3.1</version>
 		</dependency>
+		
+		<!-- Dependência para geração de planilhas com Apache POI -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>4.1.0</version>
+		</dependency>
 	</dependencies>
-	
 </project>
