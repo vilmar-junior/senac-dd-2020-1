@@ -1,5 +1,6 @@
 package model.util;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -50,21 +51,35 @@ public class GeradorPlanilha {
 		}
 
 		// 5) Salvar a planilha no disco
-		FileOutputStream arquivoSaida = null;
+		salvarNoDisco(planilha, destinoArquivoNoDisco, ".xlsx");
+	}
+
+	private String salvarNoDisco(XSSFWorkbook planilha, String caminhoArquivo, String extensao) {
+		String mensagem = "";
+		FileOutputStream saida = null;
 
 		try {
-			arquivoSaida = new FileOutputStream(destinoArquivoNoDisco + ".xlsx");
+			saida = new FileOutputStream(new File(caminhoArquivo + extensao));
+			planilha.write(saida);
+			mensagem = "Planilha gerada com sucesso!";
 		} catch (FileNotFoundException e) {
-			System.out.println("Arquivo não encontrado");
+			mensagem = "Erro ao tentar salvar planilha em: " + caminhoArquivo + extensao;
+			System.out.println("Causa: " + e.getMessage());
+		} catch (IOException e) {
+			mensagem = "Erro ao tentar salvar planilha em: " + caminhoArquivo + extensao;
+			System.out.println("Causa: " + e.getMessage());
 		} finally {
-			if (arquivoSaida != null) {
+			if (saida != null) {
 				try {
-					arquivoSaida.close();
+					saida.close();
 					planilha.close();
 				} catch (IOException e) {
-					System.out.println("Erro ao fechar arquivos");
+					mensagem = "Erro ao tentar salvar planilha em: " + caminhoArquivo + extensao;
+					System.out.println("Causa: " + e.getMessage());
 				}
 			}
 		}
+
+		return mensagem;
 	}
 }

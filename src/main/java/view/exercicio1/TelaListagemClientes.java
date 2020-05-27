@@ -3,6 +3,8 @@ package view.exercicio1;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -11,6 +13,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -32,6 +35,7 @@ public class TelaListagemClientes {
 	private JFormattedTextField txtCPF;
 	private DatePicker dtNascimentoInicial;
 	private DatePicker dtNascimentoFinal;
+	private JButton btnEditar;
 
 	private void limparTabelaClientes() {
 		tblClientes.setModel(new DefaultTableModel(new Object[][] { nomesColunas, }, nomesColunas));
@@ -108,6 +112,18 @@ public class TelaListagemClientes {
 		frmListagemDeClientes.getContentPane().add(btnBuscar);
 
 		tblClientes = new JTable();
+		tblClientes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int indiceSelecionado = tblClientes.getSelectedRow();
+
+				if (indiceSelecionado > 0) {
+					btnEditar.setEnabled(true);
+				} else {
+					btnEditar.setEnabled(false);
+				}
+			}
+		});
 		tblClientes.setBounds(25, 164, 650, 328);
 		frmListagemDeClientes.getContentPane().add(tblClientes);
 
@@ -160,7 +176,22 @@ public class TelaListagemClientes {
 				}
 			}
 		});
-		btnGerarPlanilha.setBounds(285, 520, 120, 45);
+		btnGerarPlanilha.setBounds(250, 520, 120, 45);
 		frmListagemDeClientes.getContentPane().add(btnGerarPlanilha);
+
+		btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO exemplo de lógica para edição
+				int linhaSelecionadaNaTabela = tblClientes.getSelectedRow();
+				Cliente clienteSelecionado = clientes.get(linhaSelecionadaNaTabela - 1);
+
+				JOptionPane.showMessageDialog(null, "Chamar a tela de edição e passar o objeto clienteSelecionado...");
+			}
+		});
+		btnEditar.setBounds(380, 520, 120, 45);
+		btnEditar.setEnabled(false);
+		frmListagemDeClientes.getContentPane().add(btnEditar);
+
 	}
 }
