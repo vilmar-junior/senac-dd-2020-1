@@ -27,6 +27,12 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.19</version>
 		</dependency>
+		<dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.10</version>
+            <scope>provided</scope>
+        </dependency>
 		
 		<!-- Dependência para funcionar o FormLayout -->
 		<dependency>
@@ -45,8 +51,13 @@
 		<!-- Dependência para geração de planilhas com Apache POI -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.17</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
-			<version>4.1.0</version>
+			<version>3.17</version>
 		</dependency>
 	</dependencies>
 </project>

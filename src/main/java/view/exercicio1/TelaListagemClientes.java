@@ -39,10 +39,16 @@ public class TelaListagemClientes {
 
 	private void limparTabelaClientes() {
 		tblClientes.setModel(new DefaultTableModel(new Object[][] { nomesColunas, }, nomesColunas));
+		tblClientes = new JTable(tblClientes.getModel()) {
+			public boolean isCellEditable(int rowIndex, int colIndex) {
+				return false;
+			}
+		};
 	}
 
 	private void atualizarTabelaClientes() {
-		limparTabelaClientes();
+		this.limparTabelaClientes();
+
 		DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
 
 		for (Cliente c : clientes) {
@@ -112,6 +118,8 @@ public class TelaListagemClientes {
 		frmListagemDeClientes.getContentPane().add(btnBuscar);
 
 		tblClientes = new JTable();
+		this.limparTabelaClientes(); // Adicionei essa linha
+
 		tblClientes.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

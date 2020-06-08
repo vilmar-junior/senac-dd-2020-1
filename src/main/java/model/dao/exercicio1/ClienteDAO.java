@@ -99,7 +99,7 @@ public class ClienteDAO {
 
 	public Cliente consultarPorId(int id) {
 		Connection conexao = Banco.getConnection();
-		String sql = " SELECT * FROM CLIENTE WHERE id = " + id;
+		String sql = " SELECT * FROM EXEMPLOS.CLIENTE WHERE id = " + id;
 		PreparedStatement stmt = Banco.getPreparedStatement(conexao, sql);
 
 		Cliente cliente = null;
@@ -119,7 +119,7 @@ public class ClienteDAO {
 
 	public ArrayList<Cliente> consultarTodos() {
 		Connection conexao = Banco.getConnection();
-		String sql = " SELECT * FROM CLIENTE ";
+		String sql = " SELECT * FROM EXEMPLOS.CLIENTE ";
 		PreparedStatement stmt = Banco.getPreparedStatement(conexao, sql);
 		
 		ArrayList<Cliente> clientes = new ArrayList<Cliente>();
@@ -140,7 +140,7 @@ public class ClienteDAO {
 
 	public ArrayList<Cliente> consultarPorSeletor(ClienteSeletor seletor) {
 		Connection conexao = Banco.getConnection();
-		String sql = " SELECT * FROM CLIENTE C ";
+		String sql = " SELECT * FROM EXEMPLOS.CLIENTE C ";
 
 		if (seletor.temFiltro()) {
 			sql = criarFiltros(sql, seletor);
@@ -277,7 +277,7 @@ public class ClienteDAO {
 
 	public boolean temClienteMorandoNoEndereco(int idEndereco) {
 		Connection conexao = Banco.getConnection();
-		String sql = " SELECT id FROM CLIENTE c " + " WHERE c.idEndereco = " + idEndereco;
+		String sql = " SELECT id FROM EXEMPLOS.CLIENTE c " + " WHERE c.idEndereco = " + idEndereco;
 		PreparedStatement stmt = Banco.getPreparedStatement(conexao, sql);
 
 		boolean enderecoJaUsado = false;

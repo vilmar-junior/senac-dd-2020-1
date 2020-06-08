@@ -16,7 +16,7 @@ public class TelefoneDAO {
 	public Telefone salvar(Telefone novoTelefone) {
 		
 		Connection conn = Banco.getConnection();
-		String sql = " INSERT INTO TELEFONE (codigoPais, ddd, numero, movel, idCliente, ativo) "
+		String sql = " INSERT INTO EXEMPLOS.TELEFONE (codigoPais, ddd, numero, movel, idCliente, ativo) "
 				+ " VALUES (?,?,?,?,?,?) ";
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
@@ -24,7 +24,7 @@ public class TelefoneDAO {
 			stmt.setString(1, novoTelefone.getCodigoPais());
 			stmt.setString(2, novoTelefone.getDdd());
 			stmt.setString(3, novoTelefone.getNumero());
-			stmt.setString(4, novoTelefone.isMovel() ? "1" : "0");
+			stmt.setInt(4, novoTelefone.isMovel() ? 1 : 0);
 
 			if (novoTelefone.getDono() != null) {
 				stmt.setInt(5, novoTelefone.getDono().getId());
@@ -50,7 +50,7 @@ public class TelefoneDAO {
 
 	public boolean excluir(int id) {
 		Connection conn = Banco.getConnection();
-		String sql = " DELETE FROM TELEFONE WHERE ID= " + id;
+		String sql = " DELETE FROM EXEMPLOS.TELEFONE WHERE ID= " + id;
 		Statement stmt = Banco.getStatement(conn);
 
 		int quantidadeLinhasAfetadas = 0;
@@ -91,7 +91,7 @@ public class TelefoneDAO {
 	 */
 	public void desativarTelefones(int idCliente) {
 		Connection conn = Banco.getConnection();
-		String sql = " UPDATE TELEFONE SET idCliente=NULL, ativo=0 WHERE IDCLIENTE=? ";
+		String sql = " UPDATE EXEMPLOS.TELEFONE SET idCliente=NULL, ativo=0 WHERE IDCLIENTE=? ";
 
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
 
@@ -106,7 +106,8 @@ public class TelefoneDAO {
 
 	public boolean alterar(Telefone telefone) {
 		Connection conn = Banco.getConnection();
-		String sql = " UPDATE TELEFONE " + " SET codigoPais=?, ddd=?, numero=?, movel=?, idCliente=?, ativo=? "
+		String sql = " UPDATE EXEMPLOS.TELEFONE "
+				+ " SET codigoPais=?, ddd=?, numero=?, movel=?, idCliente=?, ativo=? "
 				+ " WHERE ID=? ";
 
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
@@ -116,7 +117,7 @@ public class TelefoneDAO {
 			stmt.setString(1, telefone.getCodigoPais());
 			stmt.setString(2, telefone.getDdd());
 			stmt.setString(3, telefone.getNumero());
-			stmt.setString(4, telefone.isMovel() ? "1" : "0");
+			stmt.setInt(4, telefone.isMovel() ? 1 : 0);
 
 			if (telefone.getDono() != null) {
 				stmt.setInt(5, telefone.getDono().getId());
@@ -135,7 +136,8 @@ public class TelefoneDAO {
 
 	public Telefone consultarPorId(int id) {
 		Connection conn = Banco.getConnection();
-		String sql = " SELECT id, codigoPais, ddd, numero, movel, idCliente, ativo " + " FROM TELEFONE "
+		String sql = " SELECT id, codigoPais, ddd, numero, movel, idCliente, ativo "
+				+ " FROM EXEMPLOS.TELEFONE "
 				+ " WHERE ID=" + id;
 
 		Statement stmt = Banco.getStatement(conn);
@@ -158,7 +160,7 @@ public class TelefoneDAO {
 
 	public ArrayList<Telefone> consultarTodos() {
 		Connection conn = Banco.getConnection();
-		String sql = " SELECT id, codigoPais, ddd, numero, movel, idCliente, ativo " + " FROM TELEFONE ";
+		String sql = " SELECT id, codigoPais, ddd, numero, movel, idCliente, ativo " + " FROM EXEMPLOS.TELEFONE ";
 
 		Statement stmt = Banco.getStatement(conn);
 		ArrayList<Telefone> telefones = new ArrayList<Telefone>();
@@ -180,7 +182,8 @@ public class TelefoneDAO {
 
 	public ArrayList<Telefone> consultarTodosPorIdCliente(int idCliente) {
 		Connection conn = Banco.getConnection();
-		String sql = " SELECT id, codigoPais, ddd, numero, movel, idCliente, ativo " + " FROM TELEFONE "
+		String sql = " SELECT id, codigoPais, ddd, numero, movel, idCliente, ativo "
+				+ " FROM EXEMPLOS.TELEFONE "
 				+ " WHERE IDCLIENTE = " + idCliente;
 
 		Statement stmt = Banco.getStatement(conn);
@@ -235,7 +238,7 @@ public class TelefoneDAO {
 	}
 
 	public boolean telefoneJaCadastrado(Telefone novoTelefone) {
-		String sql = " SELECT ID FROM TELEFONE T " 
+		String sql = " SELECT ID FROM EXEMPLOS.TELEFONE T " 
 				+ " WHERE T.CODIGOPAIS = " + novoTelefone.getCodigoPais()
 				+ " AND T.DDD = " + novoTelefone.getDdd() 
 				+ " AND T.NUMERO = " + novoTelefone.getNumero();
